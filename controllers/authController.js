@@ -3,17 +3,17 @@ import jwt from 'jsonwebtoken';
 
 // Helper to create and send token in cookie
 const sendTokenResponse = (user, statusCode, res) => {
-  const token = jwt.sign(
-    { id: user._id },
-    process.env.JWT_SECRET || 'super_secure_skillbridge_ai_secret_key_9912',
-    { expiresIn: '30d' }
-  );
-
+const token = jwt.sign(
+  { id: user._id },
+  process.env.JWT_SECRET,
+  { expiresIn: '30d' }
+);
   const options = {
     expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: 'none',
+    secure: true
   };
 
   res
